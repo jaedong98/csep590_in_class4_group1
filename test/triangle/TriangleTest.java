@@ -15,6 +15,6 @@ public class TriangleTest {
     public void test1() {
         Type actual = Triangle.classify(-1, 0, 0);
         Type expected = INVALID;
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 }
