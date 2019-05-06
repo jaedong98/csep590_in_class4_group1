@@ -1,6 +1,7 @@
 <project name="Triangle" default="compile" basedir=".">
 
-<!-- Directory that holds the coverage results -->
+<!-- Directories that hold coverage and mutation results -->
+    <property name="dir.mut" value="mutation_results"/>
     <property name="dir.cov" value="coverage_results"/>
 
 <!-- Configuration for cobertura -->
@@ -18,11 +19,11 @@
         <delete>
             <fileset dir="." includes="*.ser"/>
         </delete>
-        <delete dir="${dir.cov}"/>
-        <delete dir=".instrumented"/>
+       <delete dir="${dir.cov}"/>
+       <delete dir="${dir.mut}"/>
     </target>
 
-<!-- Target to initialize the build -->
+<!-- Target to initialize build -->
     <target name="init">
         <mkdir dir="bin"/>
     </target>
@@ -74,6 +75,37 @@
             </batchtest>
         </junit>
     </target>
+
+<!-- Run mutation testing -->
+    <target name="mutation" depends="clean,init" description="Run mutation analysis for all unit test cases">
+        <echo message="Running mutation analysis ..."/>
+        <antcall target="compile.tests" />
+
+        <delete dir="${dir.mut}"/>
+        <mkdir dir="${dir.mut}"/>
+        <copy file=".mutated/mutants.log" tofile="${dir.mut}/mutants.log" />
+        <copy todir="${dir.mut}/mutants">
+            <fileset dir=".mutated/mutants" />
+        </copy>
+
+        <junit  printsummary="false"
+                  showoutput="false"
+            mutationAnalysis="true"
+              mutantsLogFile="${dir.mut}/mutants.log"
+                 testMapFile="${dir.mut}/testMap.csv"
+                 summaryFile="${dir.mut}/summary.csv"
+                  resultFile="${dir.mut}/results.csv"
+             killDetailsFile="${dir.mut}/killed.csv">
+
+            <classpath path=".mutated"/>
+            <classpath path="bin"/>
+            <batchtest fork="false">
+                <fileset dir="test">
+                    <include name="**/*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+     </target>
 
 <!-- Coverage analysis -->
     <target name="coverage" description="Run coverage analysis">
