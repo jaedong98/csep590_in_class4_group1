@@ -29,16 +29,16 @@ unit testing and test effectiveness, using code coverage criteria.
 2. After completion, the following files in the *mutation_results* directory
 provide additional information about the generated, killed, and live mutants:
 
-  - *killed.csv*:  a summary of whether a mutant is still live or was killed
-                   with an exception/assertion/timeout.
+    - *killed.csv*:  a summary of whether a mutant is still live or was killed
+                     with an exception/assertion/timeout.
 
-  - *summary.csv*: a one-line summary that indicates how many mutants were
-                   generated and killed, and how long the analysis took.
+    - *summary.csv*: a one-line summary that indicates how many mutants were
+                     generated and killed, and how long the analysis took.
 
-  - *mutants.log*: a summary of the generated mutants (i.e., what part of the
-                   code was changed and how).
+    - *mutants.log*: a summary of the generated mutants (i.e., what part of the
+                     code was changed and how).
 
-3. Rather than reading the mutants.log file, you can visualize the source code
+Rather than reading the mutants.log file, you can visualize the source code
 differences between a mutant and the original program by running:
 `./show_mutant.sh <mutant ID>`
 
