@@ -17,10 +17,46 @@ unit testing and test effectiveness, using code coverage criteria.
 
 #### Code coverage analysis
 
-1. Run `ant coverage` to compute the coverage results.
+1. Run `./coverage.sh` to compute the coverage results.
 
 2. After completion, you can view the detailed html coverage report here:
    *coverage_results/index.html*
+
+#### Mutation analysis
+
+1. Run `./mutation.sh` to compute the mutation score.
+
+2. After completion, the following files in the *mutation_results* directory
+provide additional information about the generated, killed, and live mutants:
+
+  - *killed.csv*:  a summary of whether a mutant is still live or was killed
+                   with an exception/assertion/timeout.
+
+  - *summary.csv*: a one-line summary that indicates how many mutants were
+                   generated and killed, and how long the analysis took.
+
+  - *mutants.log*: a summary of the generated mutants (i.e., what part of the
+                   code was changed and how).
+
+3. Rather than reading the mutants.log file, you can visualize the source code
+differences between a mutant and the original program by running:
+`./show_mutant.sh <mutant ID>`
+
+For example, the following command shows how mutant 1 differs from the original
+(i.e., unmutated) program:
+`./show_mutant.sh 1`
+
+The output is a unified diff that indicates what line the mutation changed:
+```
+--- src/triangle/Triangle.java
++++ .mutated/mutants/1/triangle/Triangle.java
+@@ -20 +20 @@
+-        if (a <= 0 || b <= 0 || c <= 0) {
++        if (a <= 1 || b <= 0 || c <= 0) {
+```
+The line starting with `@@` indicates the line number of the changed source code
+line (20 in this example). The line starting with `- ` shows the removed line,
+and the line starting with `+ ` shows the line that replaced it.
 
 ## Troubleshooting
 
