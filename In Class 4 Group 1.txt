@@ -45,8 +45,17 @@ for any of the above, two sides are equal, and the other is > 0. so any positive
 
 5. What changes in code coverage ratio and mutation score did you observe after deleting all assertions? What are the implications when using code coverage as adequacy criterion?
 
+    Code coverage :100%
+    Mutation score: 0.00%
+        [junit] MAJOR: Mutation score: 0.00% (0.00%)
+        [junit] MAJOR: Mutants killed / live: 0 (0-0-0) / 150
+
+    Traditional test coverage (i.e line, statement, branch, etc.) measures only which code is executed by (unit) tests.
+    It does not check that the tests are actually able to detect faults in the executed code.
 
 
+
+-- other lives:
 
 11 is equivalent
 -        if (a <= 0 || b <= 0 || c <= 0) {
