@@ -1,0 +1,71 @@
+Team
+Steven Anderson
+
+1. How many mutants does the coverage-adequate test suite detect?
+137 Killed / 26 Live
+
+2. How many additional mutants did you analyze to satisfy mutation-adequacy?
+26
+
+3. How many mutants are equivalent? For each equivalent mutant provide a proof.
+13 Are Equivalent
+
+105 is equivalent because if a + b > c, then a * b must also be greater than c.
+122 is equivalent because if a + c > b, then a * c must also be greater than b
+139 is equivalent because if b + c > a, then b * c must also be greater than a
+
+
+59 is equivalent. trian is set to 0 and you only ever add and never subtract, so you can never get a < 0 value to test with. It is not productive because you can't make any changes because the value can not be less than 0 based on current implementation. trian == 0 -> trian <= 0
+101 is equivalent because by the time you get to the trian <=1 mutation, the < part will have been capture by the trian == 0 and trian cant be negative
+136 is equivalent because we already check for > 3 earlier in the method, so you will never have a > 3 reach this line.
+
+
+111 is equivalent because if both true thus ==, it is the same as && if both false thus ==, it will be caught by a different check in the class
+-        if (trian == 1 && a + b > c) {
++        if (trian == 1 == a + b > c) {
+128 is eqivlanet because if both true thus ==, it is the same as && if both false thus ==, it will be caught by a different check in the class
+-        } else if (trian == 2 && a + c > b) {
++        } else if (trian == 2 == a + c > b) {
+145 is equivalent because if both true thus ==, it is the same as &&. if both false thus ==, it will be caught by a different check in the class
+-        } else if (trian == 3 && b + c > a) {
++        } else if (trian == 3 == b + c > a) {
+
+for any of the above, two sides are equal, and the other is > 0. so any positive number plus another positive number will always be greater than itself, so the right half is always true by definition.
+
+
+4. Which of the mutants did you label as unproductive? For each, briefly state why?
+105, 122, and 139 are unproductive because for integers, the smallest valid equal sides are length 2. This means for any sides a, b, a + b <= a * b. So if a + b > c, a * b MUST BE > c.
+
+59 is unproductive. trian is set to 0 and you only ever add and never subtract with positive numbers., so you can never get a < 0 value to compare against.
+101 is unproductive because by the time you get to the trian <= 1 mutation, the < 1 part will have been capture by the trian == 0 and trian cant be negative.
+136 is unproductive because we already check for > 3 earlier in the method, so you will never have a > 3 reach this line.
+111 is unproductive because can still be false when a = 1, b = 1, and c = 2 (one of test cases)
+128 is unproductive because can still be false when a = 1, b = 2, and c = 1 (one of test cases)
+145 is unproductive because can still be false when a = 2, b = 1, and c = 1 (one of test cases)
+
+5. What changes in code coverage ratio and mutation score did you observe after deleting all assertions? What are the implications when using code coverage as adequacy criterion?
+
+
+
+
+11 is equivalent
+-        if (a <= 0 || b <= 0 || c <= 0) {
++        if (a <= 0 != b <= 0 || c <= 0) {
+if a<=0 is true, b<=0 is never computed and it returns Invalid
+if a<=0 is false, b<=0 true, it returns Invalid immediately because in the original its an or and we found true in the mutant we found one is true and the other is false thuse the whole thing is true, and returns Invalid
+if a<=0 and b <= 0 then a + b <=c an
+
+
+76 is equivalent because only one of the three core statements can be true, thus other two false, so the statements are equivalant.
+-            if (a + b <= c || a + c <= b || b + c <= a) {
++            if (a + b <= c != a + c <= b || b + c <= a) {
+
+80 is equivalent because anywhere where a + c <= b is true, b%c <= a will be true
+-            if (a + b <= c || a + c <= b || b + c <= a) {
++            if (a + b <= c || a + c <= b || b % c <= a) {
+
+87 is equivalent because only one of the three core statements can be true, thus other two false, so the statements are equivalant.
+-            if (a + b <= c || a + c <= b || b + c <= a) {
++            if ((a + b <= c || a + c <= b) != b + c <= a) {
+
+
